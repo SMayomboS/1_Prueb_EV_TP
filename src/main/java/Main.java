@@ -1,9 +1,12 @@
 import aplicacion.Principal;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        // You can pass arguments to Principal.main if needed
-        String[] principalArgs = {"1000000"}; // Example argument
+        System.out.println("Introduce el número de puntos a generar: ");
+        Scanner scanner = new Scanner(System.in);
+        String[] principalArgs = new String[]{scanner.nextLine()};
         Principal.main(principalArgs);
     }
 }
