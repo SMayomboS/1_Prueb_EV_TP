@@ -20,6 +20,14 @@ public class Tablero {
     private int [][] estadoActual = new int[DIMENSION][DIMENSION];
     private int [][] estadoSiguiente = new int[DIMENSION][DIMENSION];
 
+    public void matiz() {
+        for (int i = 0; i < DIMENSION; i++) {
+            for (int j = 0; j < DIMENSION; j++) {
+                estadoActual[i][j] = 0;
+            }
+        }
+    }
+
 
     public void leerEstadoActual() throws IOException{
         var lineas = Files.readAllLines(Paths.get("src/main/java/dominio/matriz"));

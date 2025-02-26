@@ -11,11 +11,13 @@ public class Matematicas {
         if (puntosTotales <= 0) throw new IllegalArgumentException("El número de puntos debe ser mayor que cero");
 
         Random random = new Random();
-        long aciertos = 0;
+        int aciertos = 0;
 
-        for (long i = 0; i < puntosTotales; i++) {
+        for (int i = 0; i < puntosTotales; i++) {
             double x = random.nextDouble() * 2 - 1, y = random.nextDouble() * 2 - 1;
-            if (x * x + y * y <= 1) aciertos++;
+            if (x * x + y * y <= 1) {
+                aciertos++;
+            }
         }
 
         return 4.0 * aciertos / puntosTotales;

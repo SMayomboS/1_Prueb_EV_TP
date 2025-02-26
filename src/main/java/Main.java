@@ -1,12 +1,91 @@
-import aplicacion.Principal;
+import dominio.Tablero;
+import pr2.Graph;
+import mates.Matematicas;
 
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Introduce el número de puntos a generar: ");
         Scanner scanner = new Scanner(System.in);
-        String[] principalArgs = new String[]{scanner.nextLine()};
-        Principal.main(principalArgs);
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\nMenú:");
+            System.out.println("1. Iniciar Aproximación de Pi");
+            System.out.println("2. Jugar: Juego de la Vida");
+            System.out.println("3. Test Graph");
+            System.out.println("4. Exit");
+            System.out.print("Elige un programa: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Introduce el número de puntos a generar: ");
+                    scanner.nextLine(); // Consume newline
+                    long puntos = scanner.nextLong();
+                    System.out.println("Aproximación de Pi: " + Matematicas.generarNumeroPi(puntos));
+                    break;
+                case 2:
+                    System.out.println("Juego de la Vida");
+                    juegoVida();
+                    break;
+                case 3:
+                    testGraph();
+                    break;
+                case 4:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
     }
+
+    private static void juegoVida() {
+        try
+        {
+            Tablero tablero = new Tablero();
+            System.out.println("SIMULACIOÓN CON TABLERO LEÍDO");
+            tablero.leerEstadoActual();
+            System.out.println("------------------------------");
+            System.out.println(tablero);
+            for (int i = 0; i <= 5; i++){
+                TimeUnit.SECONDS.sleep(1);
+                System.out.println("////////////////////////");
+                tablero.transitarAlEstadoSiguiente();
+                System.out.println(tablero);
+            }
+            System.out.println("SIMULACIÓN CON TABLERO GENERADO MEDIANE MONTECARLO");
+            tablero.generarEstadoActualPorMontecarlo();
+            System.out.println("------------------------------");
+            System.out.println(tablero);
+            for (int i = 0; i <= 15; i++){
+                TimeUnit.SECONDS.sleep(1);
+                System.out.println("//////////////////////////////");
+                tablero.transitarAlEstadoSiguiente();
+                System.out.println(tablero);
+            }
+        } catch (InterruptedException e){
+            System.out.println(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private static void testGraph() {
+        Graph<Integer> g = new Graph<>();
+        g.addEdge(1, 2);
+        g.addEdge(3, 4);
+        g.addEdge(1, 5);
+        g.addEdge(5, 6);
+        g.addEdge(6, 4);
+        System.out.println("Graph created and edges added.");
+        System.out.println("Graph: " + g);
+        System.out.println("Path from 1 to 4: " + g.onePath(1, 4));
+    }
+
+
 }
