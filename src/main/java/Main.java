@@ -44,35 +44,39 @@ public class Main {
     }
 
     private static void juegoVida() {
-        try
-        {
+        try {
             Tablero tablero = new Tablero();
-            System.out.println("SIMULACIOÓN CON TABLERO LEÍDO");
+
+            // Crear el archivo matriz con el estado inicial aleatorio
+            tablero.generarArchivoMatriz();
+
+            System.out.println("SIMULACIÓN CON TABLERO LEÍDO");
             tablero.leerEstadoActual();
             System.out.println("------------------------------");
             System.out.println(tablero);
-            for (int i = 0; i <= 5; i++){
+
+            // Definir el número máximo de ciclos
+            int maxCiclos = 10;
+            for (int i = 0; i <= maxCiclos; i++){
+                if (tablero.isFinDelJuego()) {
+                    break; // Termina si el juego ha finalizado
+                }
                 TimeUnit.SECONDS.sleep(1);
                 System.out.println("////////////////////////");
                 tablero.transitarAlEstadoSiguiente();
                 System.out.println(tablero);
+
+                // Opcional: puedes añadir una condición para terminar el juego si no hay cambios
+                tablero.finalizarJuego(maxCiclos - i); // Establece los ciclos restantes
             }
-            System.out.println("SIMULACIÓN CON TABLERO GENERADO MEDIANE MONTECARLO");
-            tablero.generarEstadoActualPorMontecarlo();
-            System.out.println("------------------------------");
-            System.out.println(tablero);
-            for (int i = 0; i <= 15; i++){
-                TimeUnit.SECONDS.sleep(1);
-                System.out.println("//////////////////////////////");
-                tablero.transitarAlEstadoSiguiente();
-                System.out.println(tablero);
-            }
-        } catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
 
     private static void testGraph() {
