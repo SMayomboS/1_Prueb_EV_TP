@@ -1,0 +1,19 @@
+@startuml
+
+' Diagrama de clases
+class Tablero {
+    static final int DIMENSION
+    int[][] estadoActual
+    int[][] estadoSiguiente
+    boolean finDelJuego
+    void matiz()
+    void generarArchivoMatriz() throws IOException
+    void leerEstadoActual() throws IOException
+    void generarEstadoActualPorMontecarlo()
+    void transitarAlEstadoSiguiente()
+    int contarVecinosVivos(int x, int y)
+    void finalizarJuego(int maxCiclos)
+    boolean isFinDelJuego()
+    String toString()
+}
+@enduml
