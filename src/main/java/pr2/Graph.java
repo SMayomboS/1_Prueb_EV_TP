@@ -48,28 +48,30 @@ public class Graph<V>{
         Deque<V> open = new ArrayDeque<>();
         open.push(v1);
         trace.put(v1, null);
+        boolean found = false;
 
-        while (!open.isEmpty()){
+        while (!open.isEmpty() && !found) {
             V v = open.pop();
             if (v.equals(v2)) {
-                return reconstructPath(trace, v1, v2);
-            }
-            for (V neighbor : adjacencyList.get(v)){
-                if (!trace.containsKey(neighbor)){
-                    trace.put(neighbor, v);
-                    open.push(neighbor);
+                found = true;
+            } else {
+                for (V neighbor : adjacencyList.get(v)) {
+                    if (!trace.containsKey(neighbor)) {
+                        trace.put(neighbor, v);
+                        open.push(neighbor);
+                    }
                 }
             }
         }
 
-        return null;
-    }
-
-    private List<V> reconstructPath(Map<V, V> trace, V start, V end){
-        List<V> path = new LinkedList<>();
-        for(V at = end; at != null; at = trace.get(at)){
-            path.add(0, at);
+        if (found){
+            List<V> path = new LinkedList<>();
+            for (V at = v2; at != null; at = trace.get(at)){
+                path.add(0, at);
+            }
+            return path;
         }
-        return path.get(0).equals(start) ? path : null;
+
+        return null;
     }
 }
